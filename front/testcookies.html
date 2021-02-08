@@ -3,10 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>test cookies</title>
+    <link rel="stylesheet" type="text/css" href="../cssy/style1.css">
+    <script>
+        function enableButton(btName){
+           console.log(btName + ' to be enabled')
+            if (document.getElementById(btName).disabled == true){
+                document.getElementById(btName).disabled  = false
+            }
+            else{
+                document.getElementById(btName).disabled  = true
+            }
+        }
+        function showCookies(){
+            let sCookies = listCookies() // document.cookie
+            console.log('showCookies:' + sCookies)
+            // if(sCookies== "") {
+            //     sCookies="no cookies"
+            // }
+           document.getElementById("parCurrentCookies").innerText =  sCookies
+        }
+        function fillTestData   () {
+            console.log("fillTestData")
+            document.getElementById("tbCookieName").value="testName"
+            document.getElementById("tbCookieValue").value="testValue"
+        }
+        function setCookieInner(cName, cValue) {
+            let d = new Date()
+            d.setTime( d.getTime() + 2*24*60*60*1000 )
+            let expires = "expires=" + d.toUTCString()
+            console.log ( cName+ '=' + cValue + ';' + expires + ';path=/')
+            document.cookie = cName+ '=' + cValue //+ ';' + expires + ';path=/'
+        }
+        function setCookie(){
+            let cName = document.getElementById('tbCookieName').value
+            let cValue = document.getElementById('tbCookieValue').value
+            console.log ('setCookie: ' + cName + '; ' + cValue)
+            setCookieInner( cName, cValue )
+        }
+        function listCookies() {
+            let theCookies = document.cookie.split(';');
+            let aString = '';
+            console.log(theCookies)
+            for (let i = 1 ; i <= theCookies.length; i++) {
+                aString += i + ': ' + theCookies[i-1] + "\n";
+            }
+            return aString;
+        }
+
+    </script>
 </head>
 <body>
+<h3>testcookies : write, createnew, read</h3>
+<myco
 <a href="index.html">powrót do index</a>
-<p style="font-size: smaller; color: darkblue">
+<button onclick="alert('button test')">test</button>
+<input type="submit" id="btnSubmit" value="to be displayed" disabled>
+<input type="submit" onclick="" value="bbbb" >
+<input type="submit" onclick="enableButton('btnSubmit')" value="enable/disable">
+<br/><br/>
+<button onclick="fillTestData()">get test values</button>
+<br/><input type="text" id="tbCookieName" />
+<input type="text" id="tbCookieValue"/>
+<label for="tbCookieName">labelCookieName</label><label for="tbCookieValue">labelCookieValue</label>
+<button onclick="setCookie(document.getElementById('tbCookieName').value, document.getElementById('tbCookieValue').value) ">write cookies</button>
+<p>
     <br/>input text : name of cookie, value of cookie
     <br/>button : save cookies
     <br/>text area: many cookies
@@ -15,5 +75,9 @@
     <br/>obszar static: link to plik tekstowy (lub plików); to ma umożliwić pełną swogodę w notatkach
     <br/>
 </p>
+<button onclick="showCookies()">show cookies</button>
+<p style="font-size: smaller; color : darkolivegreen" id="parCurrentCookies" ></p>
+
 </body>
+
 </html>
